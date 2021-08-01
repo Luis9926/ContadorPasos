@@ -23,7 +23,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "permissions": ["CAMERA_ROL"],
+      "package":"com.ejemplo.app",
+      "config":{
+
+        "googleMaps":{
+          "apiKey":"AIzaSyBaetXpDtFQsuChZQeC5_yM_xUcmqZ2BNc"
+        }
       }
+
+
     },
     "web": {
       "favicon": "./assets/favicon.png"
