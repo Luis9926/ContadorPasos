@@ -1,47 +1,71 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Card, Avatar, ListItem, Icon } from "react-native-elements";
-export default function Contador() {
-  return (
-    <View>
-      <Card style={styles.container}>
-        <Avatar
-          rounded
-          size="xlarge"
-          icon={{ name: "user", color: "white", type: "font-awesome" }}
-          overlayContainerStyle={{ backgroundColor: "black" }}
-        />
-        <Text h2> Luis Angel </Text>
-        <Text h5> CuchaMau </Text>
-        <Card.Divider />
+import { Pedometer } from "expo-sensors";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/core";
+import VistaContador from "./VistaContador";
+export default class Contador extends React.Component {
+  state = {
+    isPedometerAvailable: "checking",
+    pastStepCount: 0,
+    currentStepCount: 0,
+  };
 
-        <ListItem bottomDivider>
-          <Icon name={"phone"} type="font-awesome" />
-          <ListItem.Content>
-            <ListItem.Title>Cantidad de Pasos</ListItem.Title>
-            <ListItem.Subtitle>6,000</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <Icon name={"briefcase"} type="font-awesome" />
-          <ListItem.Content>
-            <ListItem.Title>Distancia Recorrida</ListItem.Title>
-            <ListItem.Subtitle>5.05 KM</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-      </Card>
-    </View>
-  );
+  componentDidMount() {
+    this._subscribe();
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
+  _subscribe = () => {
+    this._subscription = Pedometer.watchStepCount((result) => {
+      this.setState({
+        currentStepCount: result.steps,
+      });
+    });
+
+    Pedometer.isAvailableAsync().then(
+      (result) => {
+        this.setState({
+          isPedometerAvailable: String(result),
+        });
+      },
+      (error) => {
+        this.setState({
+          isPedometerAvailable: "Could not get isPedometerAvailable: " + error,
+        });
+      }
+    );
+    //  const navigation = useNavigation();
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - 1);
+    Pedometer.getStepCountAsync(start, end).then(
+      (result) => {
+        this.setState({ pastStepCount: result.steps });
+      },
+      (error) => {
+        this.setState({
+          pastStepCount: "Could not get stepCount: " + error,
+        });
+      }
+    );
+  };
+
+  _unsubscribe = () => {
+    this._subscription && this._subscription.remove();
+    this._subscription = null;
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <VistaContador props={this.state}></VistaContador>
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    textAlign: "center",
-  },
-  avatar: {
-    marginLeft: 46,
-    marginBottom: 30,
-  },
-});
+const styles = StyleSheet.create({});

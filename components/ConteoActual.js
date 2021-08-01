@@ -1,47 +1,35 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Card, Avatar, ListItem, Icon } from "react-native-elements";
-export default function ConteoActual() {
-  return (
-    <View>
-      <Card style={styles.container}>
-        <Avatar
-          rounded
-          size="xlarge"
-          icon={{ name: "user", color: "white", type: "font-awesome" }}
-          overlayContainerStyle={{ backgroundColor: "black" }}
-        />
-        <Text h2> Luis Angel </Text>
-        <Text h5> CuchaMau2 </Text>
-        <Card.Divider />
+import React, { useState, useEffect } from "react";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import * as Location from "expo-location";
 
-        <ListItem bottomDivider>
-          <Icon name={"phone"} type="font-awesome" />
-          <ListItem.Content>
-            <ListItem.Title>Cantidad de Pasos</ListItem.Title>
-            <ListItem.Subtitle>5,000</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <Icon name={"briefcase"} type="font-awesome" />
-          <ListItem.Content>
-            <ListItem.Title>Distancia Recorrida</ListItem.Title>
-            <ListItem.Subtitle>5.05 KM</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-      </Card>
+export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.paragraph}>{text}</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    textAlign: "center",
-  },
-  avatar: {
-    marginLeft: 46,
-    marginBottom: 30,
-  },
-});
+const styles = StyleSheet.create({});

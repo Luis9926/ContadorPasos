@@ -8,12 +8,12 @@ export default function PasosStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Iniciar Conteo"
+        name="Contador"
         component={Contador}
         options={{ title: "Contador" }}
       />
       <Stack.Screen
-        name="Contando"
+        name="ConteoActual"
         component={ConteoActual}
         options={{ title: "Contando" }}
       />
