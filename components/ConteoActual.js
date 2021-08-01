@@ -12,7 +12,7 @@ export default function ConteoActual() {
           overlayContainerStyle={{ backgroundColor: "black" }}
         />
         <Text h2> Luis Angel </Text>
-        <Text h5> CuchaMau </Text>
+        <Text h5> CuchaMau2 </Text>
         <Card.Divider />
 
         <ListItem bottomDivider>
