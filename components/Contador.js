@@ -19,7 +19,7 @@ export default function Contador() {
           <Icon name={"phone"} type="font-awesome" />
           <ListItem.Content>
             <ListItem.Title>Cantidad de Pasos</ListItem.Title>
-            <ListItem.Subtitle>5,000</ListItem.Subtitle>
+            <ListItem.Subtitle>6,000</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
         <ListItem bottomDivider>
