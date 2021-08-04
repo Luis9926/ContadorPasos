@@ -18,12 +18,12 @@ export default function Navigation() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === "Users") {
+            if (route.name === "Usuario") {
               iconName = focused ? "people-circle" : "people-circle-outline";
-            } else if (route.name === "Albums") {
-              iconName = focused ? "images" : "images-outline";
-            } else if (route.name === "Posts") {
-              iconName = focused ? "clipboard" : "clipboard-outline";
+            } else if (route.name === "Pasos") {
+              iconName = focused ? "list" : "list";
+            } else if (route.name === "Contador") {
+              iconName = focused ? "stopwatch" : "stopwatch";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -38,6 +38,26 @@ export default function Navigation() {
           name="Contador"
           component={PasosStack}
           options={{ title: "Contador" }}
+          options={
+            ({ title: "Contador" },
+            ({ navigation }) => {
+              const { routes, index } = navigation.dangerouslyGetState();
+              const { state: exploreState } = routes[index];
+              let tabBarVisible = true;
+              if (exploreState) {
+                const { routes: exploreRoutes, index: exploreIndex } =
+                  exploreState;
+                const exploreActiveRoute = exploreRoutes[exploreIndex];
+                if (exploreActiveRoute.name === "ConteoActual")
+                  tabBarVisible = false;
+              }
+              return {
+                tabBarVisible,
+                title: "Contando",
+                tabBarLabel: "Contador",
+              };
+            })
+          }
         />
         <Tab.Screen
           name="Pasos"

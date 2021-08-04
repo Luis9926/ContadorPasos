@@ -27,7 +27,6 @@
       "permissions": ["CAMERA_ROL"],
       "package":"com.ejemplo.app",
       "config":{
-
         "googleMaps":{
           "apiKey":"AIzaSyBaetXpDtFQsuChZQeC5_yM_xUcmqZ2BNc"
         }

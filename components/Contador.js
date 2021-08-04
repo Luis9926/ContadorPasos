@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Pedometer } from "expo-sensors";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/core";
 import VistaContador from "./VistaContador";
 export default class Contador extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
@@ -20,10 +23,15 @@ export default class Contador extends React.Component {
   }
 
   _subscribe = () => {
+    console.log(this.props);
     this._subscription = Pedometer.watchStepCount((result) => {
+      console.log("pasos", result);
       this.setState({
         currentStepCount: result.steps,
       });
+
+      if (result.steps > this.props) {
+      }
     });
 
     Pedometer.isAvailableAsync().then(
@@ -61,11 +69,35 @@ export default class Contador extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <VistaContador props={this.state}></VistaContador>
+      <View style={styles.centerText}>
+        <Text style={{ fontSize: 32, color: "white" }}>Pasos</Text>
+        <Text
+          style={{ fontSize: 24, marginTop: 5, marginLeft: 40, color: "white" }}
+        >
+          {this.state.currentStepCount}
+        </Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    textAlign: "center",
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  lowerContainer: {
+    marginTop: 30,
+    flex: 1,
+    alignItems: "center",
+    textAlign: "center",
+  },
+  centerText: {
+    textAlign: "center",
+    alignContent: "center",
+  },
+});

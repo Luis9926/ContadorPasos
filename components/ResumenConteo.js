@@ -1,19 +1,24 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Card, Avatar, ListItem, Icon } from "react-native-elements";
+import { Card, Avatar, ListItem, Icon, Tile } from "react-native-elements";
 
 export default function ResumenConteo() {
   return (
     <View>
-      <Card style={styles.container}>
-        <Avatar
-          rounded
-          size="xlarge"
-          icon={{ name: "user", color: "white", type: "font-awesome" }}
-          overlayContainerStyle={{ backgroundColor: "black" }}
+      <View style={{ marginTop: 30, marginBottom: 20 }}>
+        <Tile
+          imageSrc={require("../assets/exer.jpg")}
+          imageContainerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          title="Resultados"
+          caption="Conteo Final"
+          captionStyle={{ fontSize: 15 }}
+          titleStyle={{ fontSize: 30 }}
+          featured
+          height={250}
         />
-        <Text h2> Luis Angel </Text>
-        <Text h5> CuchaMau </Text>
+      </View>
+
+      <Card style={styles.container}>
         <Card.Divider />
 
         <ListItem bottomDivider>
@@ -28,6 +33,20 @@ export default function ResumenConteo() {
           <ListItem.Content>
             <ListItem.Title>Distancia Recorrida</ListItem.Title>
             <ListItem.Subtitle>5.05 KM</ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <Icon name={"briefcase"} type="font-awesome" />
+          <ListItem.Content>
+            <ListItem.Title>Peso</ListItem.Title>
+            <ListItem.Subtitle>80 Kg</ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <Icon name={"briefcase"} type="font-awesome" />
+          <ListItem.Content>
+            <ListItem.Title>Estatura</ListItem.Title>
+            <ListItem.Subtitle>1.77 M</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       </Card>
